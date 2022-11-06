@@ -2,7 +2,7 @@ version: '3.8'
 services:
    myhpi_django:
        image: ghcr.io/fsr-de/myhpi:latest
-       command: uwsgi /app/deployment/uwsgi/uwsgi.ini
+       command: uwsgi /app/uwsgi.ini
        volumes:
          - myhpi_static_volume:/app/data/static/
        expose:
