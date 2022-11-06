@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+   myhpi_django:
+       image: ghcr.io/fsr-de/myhpi:latest
+       command: uwsgi /app/deployment/uwsgi/uwsgi.ini
+       volumes:
+         - myhpi_static_volume:/app/data/static/
+       expose:
+           - 8000
+       depends_on:
+         - myhpi_postgres
+       env_file:
+         - .env
+   myhpi_postgres:
+       image: postgres:14-alpine
+       volumes:
+           - myhpi_postgres_data:/var/lib/postgresql/data/
+       env_file:
+          - .env
+       healthcheck:
+         test: [ "CMD-SHELL", "pg_isready" ]
+         interval: 10s
+         timeout: 5s
+         retries: 5
+   myhpi_nginx:
+     build: ./nginx
+     volumes:
+       - myhpi_static_volume:/app/data/static/
+     ports:
+       - "80:80"
+     depends_on:
+       - myhpi_django
+
+volumes:
+  myhpi_postgres_data:
+  myhpi_static_volume:
