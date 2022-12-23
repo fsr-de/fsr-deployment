@@ -16,7 +16,9 @@ services:
        volumes:
            - myhpi_postgres_data:/var/lib/postgresql/data/
        env_file:
-          - .env
+           - .env
+       environment:
+           - PGUSER=myhpi
        healthcheck:
          test: [ "CMD-SHELL", "pg_isready" ]
          interval: 10s
