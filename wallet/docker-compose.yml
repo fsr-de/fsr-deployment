@@ -1,0 +1,57 @@
+services:
+  db:
+    container_name: wallet-db
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: 'kaffee'
+      MYSQL_USER: 'kaffee'
+      MYSQL_PASSWORD: "${KAFFEE_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${ROOT_PASSWORD}"
+    expose:
+      - '3306'
+    volumes:
+      - kaffe-db:/var/lib/mysql
+    networks:
+      - wallet
+      - monitoring
+    restart: unless-stopped
+  backend:
+    container_name: wallet-backend
+    build: ./backend
+    depends_on:
+      - db
+    networks:
+      - wallet
+      - monitoring
+      - internet
+    expose:
+      - '8080'
+    volumes:
+      - ./backend/nginx.conf:/etc/nginx/conf.d/default.conf
+    restart: unless-stopped
+    
+  frontend:
+    container_name: wallet-frontend
+    build: ./frontend
+    depends_on:
+      - backend
+    networks:
+      - wallet
+      - internet
+    ports:
+      - '80'
+    restart: unless-stopped
+
+
+networks:
+  wallet:
+    internal: true
+  internet:
+    name: default-network
+    external: true
+  monitoring:
+    name: monitoring
+    external: true
+
+volumes:
+  kaffe-db: {}
