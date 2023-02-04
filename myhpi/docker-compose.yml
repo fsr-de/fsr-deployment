@@ -1,17 +1,19 @@
 version: '3.8'
 services:
    myhpi_django:
+       container_name: myhpi_django
        image: ghcr.io/fsr-de/myhpi:latest
        command: uwsgi /app/uwsgi.ini
        volumes:
          - myhpi_static_volume:/app/data/static/
-       expose:
-           - 8000
        depends_on:
          - myhpi_postgres
        env_file:
          - .env
+       networks:
+         - intern
    myhpi_postgres:
+       container_name: myhpi_postgres
        image: postgres:14-alpine
        volumes:
            - myhpi_postgres_data:/var/lib/postgresql/data/
@@ -24,15 +26,27 @@ services:
          interval: 10s
          timeout: 5s
          retries: 5
+       networks:
+         - intern
    myhpi_nginx:
+     container_name: myhpi_nginx
      build: ./nginx
      volumes:
        - myhpi_static_volume:/app/data/static/
-     ports:
-       - "80:80"
      depends_on:
        - myhpi_django
+     networks:
+       - default
+       - intern
 
 volumes:
   myhpi_postgres_data:
   myhpi_static_volume:
+
+networks:
+  intern:
+    name: myhpi-internal
+    driver: bridge
+  default:
+    name: default-network
+    external: true
