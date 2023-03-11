@@ -6,6 +6,10 @@ services:
        command: uwsgi /app/uwsgi.ini
        volumes:
          - myhpi_static_volume:/app/data/static/
+         - myhpi_media_volume:/app/data/media/
+         - type: bind
+           source: ./logs
+           target: /app/logs
        depends_on:
          - myhpi_postgres
        env_file:
@@ -33,6 +37,7 @@ services:
      build: ./nginx
      volumes:
        - myhpi_static_volume:/app/data/static/
+       - myhpi_media_volume:/app/data/media/
      depends_on:
        - myhpi_django
      networks:
@@ -42,6 +47,7 @@ services:
 volumes:
   myhpi_postgres_data:
   myhpi_static_volume:
+  myhpi_media_volume:
 
 networks:
   intern:
