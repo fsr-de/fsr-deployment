@@ -17,6 +17,7 @@ services:
     restart: unless-stopped
   backend:
     container_name: wallet-backend
+    hostname: api.wallet.myhpi.de
     build: ./backend
     depends_on:
       - db
