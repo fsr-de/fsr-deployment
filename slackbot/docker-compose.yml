@@ -1,0 +1,14 @@
+services:
+
+  slackbot:
+    container_name: slackbot
+    image: registry.gitlab.hpi.de/fachschaftsrat/fsr-bot:main
+    env_file:
+      - .env
+    volumes:
+      - slackbot_db:/home/node/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+
+volumes:
+  slackbot_db:
