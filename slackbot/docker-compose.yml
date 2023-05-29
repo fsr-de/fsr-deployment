@@ -7,6 +7,8 @@ services:
       - .env
     volumes:
       - slackbot_db:/home/node/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
 
 volumes:
   slackbot_db:
