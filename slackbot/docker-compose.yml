@@ -1,0 +1,12 @@
+services:
+
+  slackbot:
+    container_name: slackbot
+    image: registry.gitlab.hpi.de/fachschaftsrat/fsr-bot:main
+    env_file:
+      - .env
+    volumes:
+      - slackbot_db:/home/node/data
+
+volumes:
+  slackbot_db:
