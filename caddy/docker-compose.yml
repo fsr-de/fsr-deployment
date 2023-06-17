@@ -1,0 +1,24 @@
+services:
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./config:/etc/caddy:ro
+      - caddy_data:/data
+      - caddy_config:/config
+      - ../verde-website:/var/www/verde:ro
+    networks:
+      - default
+
+networks:
+  default:
+    name: default-network
+    external: true
+
+volumes:
+  caddy_data:
+  caddy_config:
