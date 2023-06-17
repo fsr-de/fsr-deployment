@@ -44,6 +44,7 @@ services:
     networks:
       - db_net
       - redis_net
+      - office_net
       - default
 
   nextcloud-cron:
@@ -52,6 +53,10 @@ services:
     volumes:
       - nextcloud_vol:/var/www/html
     entrypoint: /cron.sh
+    networks:
+      - db_net
+      - redis_net
+      - office_net
     depends_on:
       - db
       - redis
@@ -88,6 +93,7 @@ services:
     env_file:
       - .env # JWT_SECRET set in env file
     networks:
+      - office_net
       - default
     ulimits:
       nofile:
@@ -97,6 +103,7 @@ services:
 networks:
   db_net: {}
   redis_net: {}
+  office_net: {}
   default:
     name: default-network
     external: true
