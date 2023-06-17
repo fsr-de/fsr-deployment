@@ -1,0 +1,113 @@
+version: "3.9"
+
+services:
+
+  nextcloud:
+    image: nextcloud:26.0.2-apache # Also change tag of the nextcloud-cron container!
+    container_name: nextcloud
+    restart: unless-stopped
+    volumes:
+      - nextcloud_vol:/var/www/html
+    environment:
+      # Initial configuration
+      # NEXTCLOUD_ADMIN_USER set in env file
+      # NEXTCLOUD_ADMIN_PASSWORD set in env file
+      # Domains
+      - NEXTCLOUD_TRUSTED_DOMAINS=nextcloud.myhpi.de
+      # PHP
+      - PHP_MEMORY_LIMIT=2G
+      - PHP_UPLOAD_LIMIT=2G
+      # Proxy
+      - APACHE_DISABLE_REWRITE_IP=1
+      - "TRUSTED_PROXIES=192.168.0.0/16 172.0.0.0/8 10.0.0.0/8"
+      - OVERWRITEPROTOCOL=https
+      # DB
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      # MYSQL_PASSWORD set in env file
+      # Redis
+      - REDIS_HOST=redis
+      # Mail
+      # SMTP_HOST set in env file
+      # SMTP_PORT set in env file
+      # SMTP_AUTHTYPE set in env file
+      # MAIL_FROM_ADDRESS set in env file
+      # MAIL_DOMAIN set in env file
+      # Updates
+      - NEXTCLOUD_UPDATE=1
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+    networks:
+      - db_net
+      - redis_net
+      - office_net
+      - default
+
+  nextcloud-cron:
+    image: nextcloud:26.0.2-apache # Also change tag of the main nextcloud container!
+    restart: unless-stopped
+    volumes:
+      - nextcloud_vol:/var/www/html
+    entrypoint: /cron.sh
+    networks:
+      - db_net
+      - redis_net
+      - office_net
+    depends_on:
+      - db
+      - redis
+      - nextcloud
+
+  db:
+    image: mariadb:10.9
+    restart: unless-stopped
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    volumes:
+      - db_vol:/var/lib/mysql
+    environment:
+      - MYSQL_USER=nextcloud
+      - MYSQL_DATABASE=nextcloud
+      # MYSQL_ROOT_PASSWORD set in env file
+      # MYSQL_PASSWORD set in env file
+    env_file:
+      - .env
+    networks:
+      - db_net
+
+  redis:
+    image: redis:7.0
+    restart: unless-stopped
+    networks:
+      - redis_net
+
+  onlyoffice:
+    image: onlyoffice/documentserver:7.4.0
+    container_name: onlyoffice
+    restart: unless-stopped
+    volumes:
+      - ./fonts:/usr/share/fonts/custom
+    env_file:
+      - .env # JWT_SECRET set in env file
+    networks:
+      - office_net
+      - default
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+
+networks:
+  db_net: {}
+  redis_net: {}
+  office_net: {}
+  default:
+    name: default-network
+    external: true
+
+volumes:
+  nextcloud_vol:
+  db_vol:

@@ -1,0 +1,11 @@
+<?php
+
+$CONFIG = array (
+  'default_locale' => 'de_DE',
+  'default_phone_region' => 'DE',
+  'token_auth_enforced' => true,
+  'skeletondirectory' => '',
+  'templatedirectory' => '',
+  'overwrite.cli.url' => 'https://nextcloud.myhpi.de',
+  'trashbin_retention_obligation' => '5, 30',
+);
