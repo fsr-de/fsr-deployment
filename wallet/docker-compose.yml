@@ -39,8 +39,6 @@ services:
     networks:
       - wallet
       - internet
-    ports:
-      - '80'
     restart: unless-stopped
 
 
