@@ -83,6 +83,8 @@ services:
     image: onlyoffice/documentserver:7.4.0
     container_name: onlyoffice
     restart: unless-stopped
+    volumes:
+      - ./fonts:/usr/share/fonts/custom
     env_file:
       - .env # JWT_SECRET set in env file
     networks:
