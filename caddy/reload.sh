@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker compose exec -it caddy caddy reload
+docker compose exec -w /etc/caddy -it caddy caddy reload
