@@ -55,7 +55,7 @@ services:
     depends_on:
       - db
       - redis
-      - nextcloud-cron
+      - nextcloud
 
   db:
     image: mariadb:10.9
