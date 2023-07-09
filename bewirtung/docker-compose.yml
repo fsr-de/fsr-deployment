@@ -1,0 +1,13 @@
+services:
+
+  generator:
+    container_name: bewirtungsnachweisgenerator
+    image: registry.gitlab.hpi.de/fachschaftsrat/bewirtungsnachweis-generator
+    restart: unless-stopped
+    networks:
+      - default
+
+networks:
+  default:
+    name: default-network
+    external: true
