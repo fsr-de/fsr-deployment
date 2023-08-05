@@ -4,6 +4,8 @@ services:
     container_name: bewirtungsnachweisgenerator
     image: registry.gitlab.hpi.de/fachschaftsrat/bewirtungsnachweis-generator
     restart: unless-stopped
+    volumes:
+      - ./catering-templates.json:/app/catering-templates.json:ro
     networks:
       - default
 
