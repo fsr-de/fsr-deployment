@@ -1,0 +1,37 @@
+services:
+  engelsystem:
+    image: ghcr.io/fsr-de/engelsystem
+    container_name: engelsystem
+    hostname: engelsystem.myhpi.de
+    env_file: .env
+    networks:
+      - database
+      - internet
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: mariadb:10.2
+    container_name: engelsystem_db
+    env_file: .env
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - database
+      - monitoring
+    restart: unless-stopped
+
+
+volumes:
+  db: {}
+
+networks:
+  database:
+    internal: true
+  internet:
+    name: default-network
+    external: true
+  monitoring:
+    name: monitoring
+    external: true
