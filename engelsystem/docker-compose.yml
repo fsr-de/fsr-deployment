@@ -22,6 +22,16 @@ services:
       - monitoring
     restart: unless-stopped
 
+  phpmyadmin:
+    image: phpmyadmin:5.2.1-fpm-alpine
+    environment:
+      PMA_HOST: db
+    networks:
+      - database
+      - internet
+    depends_on:
+      - db
+    restart: unless-stopped
 
 volumes:
   db: {}
