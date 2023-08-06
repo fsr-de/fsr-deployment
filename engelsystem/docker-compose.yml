@@ -24,6 +24,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin:5.2.1-fpm-alpine
+    container_name: engelsystem_pma
     environment:
       PMA_HOST: db
     networks:
