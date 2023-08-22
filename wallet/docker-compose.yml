@@ -1,4 +1,5 @@
 services:
+
   db:
     container_name: wallet-db
     image: mysql:latest
@@ -15,6 +16,7 @@ services:
       - wallet
       - monitoring
     restart: unless-stopped
+
   backend:
     container_name: wallet-backend
     hostname: api.wallet.myhpi.de
@@ -32,8 +34,8 @@ services:
     restart: unless-stopped
     
   frontend:
+    image: registry.gitlab.hpi.de/fachschaftsrat/wallet/portal
     container_name: wallet-frontend
-    build: ./frontend
     depends_on:
       - backend
     networks:
