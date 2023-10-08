@@ -32,7 +32,7 @@ services:
     volumes:
       - ./backend/nginx.conf:/etc/nginx/conf.d/default.conf
     restart: unless-stopped
-    
+
   frontend:
     image: registry.gitlab.hpi.de/fachschaftsrat/wallet/portal
     container_name: wallet-frontend
@@ -41,6 +41,18 @@ services:
     networks:
       - wallet
       - internet
+    restart: unless-stopped
+
+  phpmyadmin:
+    image: phpmyadmin:5.2.1-apache
+    container_name: wallet_pma
+    environment:
+      PMA_HOST: db
+    networks:
+      - wallet
+      - internet
+    depends_on:
+      - db
     restart: unless-stopped
 
 
