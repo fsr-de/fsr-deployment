@@ -45,7 +45,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin:5.2.1-apache
-    container_name: wallet_pma
+    container_name: wallet-pma
     environment:
       PMA_HOST: db
     networks:
