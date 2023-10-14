@@ -3,7 +3,7 @@ version: "3.9"
 services:
 
   nextcloud:
-    image: nextcloud:27.1.1-apache # Also change tag of the nextcloud-cron container!
+    image: nextcloud:27.1.2-apache # Also change tag of the nextcloud-cron container!
     container_name: nextcloud
     restart: unless-stopped
     volumes:
@@ -48,7 +48,7 @@ services:
       - default
 
   nextcloud-cron:
-    image: nextcloud:27.1.1-apache # Also change tag of the main nextcloud container!
+    image: nextcloud:27.1.2-apache # Also change tag of the main nextcloud container!
     restart: unless-stopped
     volumes:
       - nextcloud_vol:/var/www/html
