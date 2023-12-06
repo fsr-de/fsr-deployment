@@ -6,9 +6,8 @@ services:
     build:
       context: .
       args:
-        VERSION: "22.0.5"
-    container_name: keycloak
-    hostname: auth.myhpi.de
+        VERSION: "23.0.1"
+    hostname: auth.myhpi.local
     restart: unless-stopped
     environment:
       - KC_DB_URL_HOST=db
