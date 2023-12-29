@@ -17,7 +17,6 @@ services:
       - .env
     networks:
       - intern
-    hostname: django.myhpi.de
 
   myhpi_postgres:
     container_name: myhpi_postgres
@@ -40,6 +39,7 @@ services:
   myhpi_nginx:
     container_name: myhpi_nginx
     build: ./nginx
+    hostname: myhpi.local
     restart: unless-stopped
     volumes:
       - myhpi_static_volume:/app/data/static/

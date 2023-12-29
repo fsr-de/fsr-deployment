@@ -3,7 +3,7 @@ services:
   engelsystem:
     image: ghcr.io/fsr-de/engelsystem
     container_name: engelsystem
-    hostname: engelsystem.myhpi.de
+    hostname: engelsystem.myhpi.local
     env_file: .env
     networks:
       - database
@@ -25,6 +25,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin:5.2.1-apache
+    hostname: pma.engelsystem.myhpi.local
     container_name: engelsystem_pma
     environment:
       PMA_HOST: db

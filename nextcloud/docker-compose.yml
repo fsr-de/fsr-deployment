@@ -2,6 +2,7 @@ services:
 
   nextcloud:
     image: nextcloud:28.0.0-apache # Also change tag of the nextcloud-cron container!
+    hostname: nextcloud.myhpi.local
     container_name: nextcloud
     restart: unless-stopped
     volumes:
@@ -84,6 +85,7 @@ services:
 
   onlyoffice:
     image: onlyoffice/documentserver:7.4.0
+    hostname: office.nextcloud.myhpi.local
     container_name: onlyoffice
     restart: unless-stopped
     volumes:
