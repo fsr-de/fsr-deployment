@@ -55,7 +55,6 @@ volumes:
   myhpi_static_volume:
   myhpi_media_volume:
 
-
 networks:
   intern:
     name: myhpi-internal

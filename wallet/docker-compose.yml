@@ -54,7 +54,6 @@ services:
       - db
     restart: unless-stopped
 
-
 networks:
   wallet:
     internal: true
