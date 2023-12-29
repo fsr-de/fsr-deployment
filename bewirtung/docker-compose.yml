@@ -1,8 +1,8 @@
 services:
 
   generator:
-    container_name: bewirtungsnachweisgenerator
     image: registry.gitlab.hpi.de/fachschaftsrat/bewirtungsnachweis-generator
+    hostname: bewirtung.myhpi.local
     restart: unless-stopped
     volumes:
       - ./catering-templates.json:/app/catering-templates.json:ro

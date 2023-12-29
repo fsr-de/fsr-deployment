@@ -1,8 +1,8 @@
 services:
 
   myhpi_django:
-    container_name: myhpi_django
     image: ghcr.io/fsr-de/myhpi:latest
+    hostname: django.myhpi.local
     restart: unless-stopped
     command: uwsgi /app/uwsgi.ini
     volumes:
@@ -17,10 +17,8 @@ services:
       - .env
     networks:
       - intern
-    hostname: django.myhpi.de
 
   myhpi_postgres:
-    container_name: myhpi_postgres
     image: postgres:14-alpine
     restart: unless-stopped
     volumes:
@@ -38,8 +36,8 @@ services:
       - intern
 
   myhpi_nginx:
-    container_name: myhpi_nginx
     build: ./nginx
+    hostname: myhpi.local
     restart: unless-stopped
     volumes:
       - myhpi_static_volume:/app/data/static/
@@ -54,7 +52,6 @@ volumes:
   myhpi_postgres_data:
   myhpi_static_volume:
   myhpi_media_volume:
-
 
 networks:
   intern:

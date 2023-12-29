@@ -1,7 +1,6 @@
 services:
 
   slackbot:
-    container_name: slackbot
     image: registry.gitlab.hpi.de/fachschaftsrat/fsr-bot:main
     restart: unless-stopped
     environment:

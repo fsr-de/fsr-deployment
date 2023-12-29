@@ -1,8 +1,8 @@
 services:
 
   db:
-    container_name: wallet-db
     image: mysql:latest
+    hostname: db.wallet.myhpi.local
     environment:
       MYSQL_DATABASE: 'kaffee'
       MYSQL_USER: 'kaffee'
@@ -18,8 +18,8 @@ services:
     restart: unless-stopped
 
   backend:
-    container_name: wallet-backend
     build: ./backend
+    hostname: backend.wallet.myhpi.local
     depends_on:
       - db
     networks:
@@ -34,7 +34,7 @@ services:
 
   frontend:
     image: registry.gitlab.hpi.de/fachschaftsrat/wallet/portal
-    container_name: wallet-frontend
+    hostname: frontend.wallet.myhpi.local
     depends_on:
       - backend
     networks:
@@ -44,7 +44,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin:5.2.1-apache
-    container_name: wallet-pma
+    hostname: pma.wallet.myhpi.local
     environment:
       PMA_HOST: db
     networks:
@@ -53,7 +53,6 @@ services:
     depends_on:
       - db
     restart: unless-stopped
-
 
 networks:
   wallet:
