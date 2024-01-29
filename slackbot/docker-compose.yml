@@ -5,8 +5,6 @@ services:
     restart: unless-stopped
     environment:
       TZ: 'Europe/Berlin'
-    env_file:
-      - .env
     volumes:
       - slackbot_db:/home/node/app/data
       - ./config.json:/home/node/app/config.json:ro
