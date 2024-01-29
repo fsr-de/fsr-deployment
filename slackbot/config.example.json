@@ -14,5 +14,5 @@
     "HOLD_REACTIONS": [
         "x"
     ],
-    "DEFAULT_QUORUM_AMOUNT": 2
+    "DEFAULT_CHANNEL_QUORUM_AMOUNT": 2
 }
