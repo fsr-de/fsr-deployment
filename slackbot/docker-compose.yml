@@ -8,7 +8,8 @@ services:
     env_file:
       - .env
     volumes:
-      - slackbot_db:/home/node/data
+      - slackbot_db:/home/node/app/data
+      - ./config.json:/home/node/app/config.json:ro
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
 
