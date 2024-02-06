@@ -1,7 +1,7 @@
 services:
 
   ephios:
-    image: ghcr.io/ephios-dev/ephios:main
+    image: ghcr.io/ephios-dev/ephios:v0.16.0
     restart: unless-stopped
     hostname: django.ephios.myhpi.local
     environment:
