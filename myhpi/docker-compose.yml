@@ -1,7 +1,7 @@
 services:
 
   myhpi_django:
-    image: ghcr.io/fsr-de/myhpi:v1.0.2
+    image: ghcr.io/fsr-de/myhpi:v1.1.0
     hostname: django.myhpi.local
     restart: unless-stopped
     command: uwsgi /app/uwsgi.ini
