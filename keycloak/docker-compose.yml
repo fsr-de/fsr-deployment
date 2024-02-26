@@ -4,7 +4,7 @@ services:
     build:
       context: .
       args:
-        VERSION: "23.0.5"
+        VERSION: "23.0.7"
     hostname: auth.myhpi.local
     restart: unless-stopped
     environment:
