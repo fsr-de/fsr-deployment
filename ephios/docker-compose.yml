@@ -1,7 +1,7 @@
 services:
 
   ephios:
-    image: ghcr.io/ephios-dev/ephios:v0.16.0
+    image: ghcr.io/ephios-dev/ephios:v0.16.3
     restart: unless-stopped
     hostname: django.ephios.myhpi.local
     environment:
@@ -11,7 +11,7 @@ services:
       DATABASE_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db/${POSTGRES_DB}"
       CACHE_URL: "redis://redis/0"
       ALLOWED_HOSTS: "*"
-      SITE_URL: "https://ephios.myhpi.de"
+      SITE_URL: "https://shifts.myhpi.de"
       # EMAIL_URL set in env file
       # DEFAULT_FROM_EMAIL set in env file
       # SERVER_EMAIL set in env file
