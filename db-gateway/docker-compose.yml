@@ -1,7 +1,7 @@
 services:
 
   gateway:
-    build: registry.gitlab.hpi.de/fachschaftsrat/ssh-gateway
+    image: registry.gitlab.hpi.de/fachschaftsrat/ssh-gateway
     restart: unless-stopped
     ports:
       - "2222:22"
