@@ -13,12 +13,14 @@ services:
 
   db:
     image: mariadb:10.2
+    hostname: db.engelsystem.myhpi.local
     env_file: .env
     volumes:
       - db:/var/lib/mysql
     networks:
       - database
       - monitoring
+      - db-gateway-access
     restart: unless-stopped
 
   phpmyadmin:
@@ -44,4 +46,7 @@ networks:
     external: true
   monitoring:
     name: monitoring
+    external: true
+  db-gateway-access:
+    name: db-gateway-access
     external: true
