@@ -1,0 +1,20 @@
+services:
+
+  gateway:
+    build: registry.gitlab.hpi.de/fachschaftsrat/ssh-gateway
+    restart: unless-stopped
+    ports:
+      - "2222:22"
+    volumes:
+      - hostkeys:/hostkeys
+      - ./authorized_keys:/home/fsr/.ssh/authorized_keys:ro
+    networks:
+      - db-gateway-access
+
+networks:
+  db-gateway-access:
+    name: db-gateway-access
+    external: true
+
+volumes:
+  hostkeys: {}
