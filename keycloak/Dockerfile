@@ -17,6 +17,6 @@ RUN tar -xf theme.tar.gz
 
 FROM quay.io/keycloak/keycloak:$VERSION
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
-COPY --from=theme-loader --chown=keycloak:root /theme/fsr-keycloak-theme-main themes/fsr-keycloak-theme
 WORKDIR /opt/keycloak
+COPY --from=theme-loader --chown=keycloak:root /theme/fsr-keycloak-theme-main themes/fsr-keycloak-theme
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]
