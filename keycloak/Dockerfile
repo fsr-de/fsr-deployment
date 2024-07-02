@@ -1,6 +1,6 @@
 ARG VERSION=20.0
 
-FROM quay.io/keycloak/keycloak:$VERSION as builder
+FROM quay.io/keycloak/keycloak:$VERSION AS builder
 
 ENV KC_HEALTH_ENABLED=true
 ENV KC_METRICS_ENABLED=true
@@ -8,7 +8,7 @@ ENV KC_FEATURES=token-exchange
 ENV KC_DB=postgres
 RUN /opt/keycloak/bin/kc.sh build
 
-FROM debian as theme-loader
+FROM debian AS theme-loader
 
 RUN mkdir /theme
 WORKDIR /theme
