@@ -50,6 +50,8 @@ services:
     restart: unless-stopped
     volumes:
       - nextcloud_vol:/var/www/html
+    environment:
+      - PHP_MEMORY_LIMIT=2G # The memory limit is only read from the env and not persisted in a config file, so it has to be specified here too
     entrypoint: /cron.sh
     networks:
       - db_net
