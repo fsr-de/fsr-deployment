@@ -29,7 +29,7 @@ services:
       # Mail
       SMTP_HOST: mail3.hpi.uni-potsdam.de
       SMTP_PORT: 25
-      SMTP_FROM_EMAIL: outline@myhpi.de
+      SMTP_FROM_EMAIL: FSR Outline <outline@myhpi.de>
       SMTP_SECURE: "false"
       SMTP_NAME: outline.myhpi.de
 
