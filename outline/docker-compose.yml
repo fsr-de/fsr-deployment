@@ -61,7 +61,7 @@ services:
     networks:
       - internal
     healthcheck:
-      test: ["CMD", "pg_isready"]
+      test: ["CMD", "pg_isready -U outline"]
       interval: 30s
       timeout: 20s
       retries: 3
