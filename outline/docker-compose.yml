@@ -1,0 +1,89 @@
+services:
+
+  outline:
+    image: outlinewiki/outline:0.78.0
+    hostname: outline.myhpi.local
+    restart: unless-stopped
+    environment:
+      # Databases
+      DATABASE_URL: postgres://outline:${POSTGRES_PASSWORD}@db/outline
+      PGSSLMODE: disable
+      REDIS_URL: redis://redis:6379
+      FILE_STORAGE: local
+      FILE_STORAGE_UPLOAD_MAX_SIZE: 26214400
+
+      # Web
+      URL: https://outline.myhpi.de
+      FORCE_HTTPS: "true"
+
+      # OIDC
+      OIDC_CLIENT_ID: outline
+      # OIDC_CLIENT_SECRET set in env file
+      OIDC_AUTH_URI: https://auth.myhpi.de/realms/fsr/protocol/openid-connect/auth
+      OIDC_TOKEN_URI: https://auth.myhpi.de/realms/fsr/protocol/openid-connect/token
+      OIDC_USERINFO_URI: https://auth.myhpi.de/realms/fsr/protocol/openid-connect/userinfo
+      OIDC_USERNAME_CLAIM: sub
+      OIDC_DISPLAY_NAME: FSR Keycloak
+      OIDC_SCOPES: openid profile email
+
+      # Mail
+      SMTP_HOST: mail3.hpi.uni-potsdam.de
+      SMTP_PORT: 25
+      SMTP_FROM_EMAIL: FSR Outline <outline@myhpi.de>
+      SMTP_SECURE: "false"
+      SMTP_NAME: outline.myhpi.de
+
+      # Other
+      ENABLE_UPDATES: "false"
+      WEB_CONCURRENCY: 8
+      MAXIMUM_IMPORT_SIZE: 26214400
+      DEFAULT_LANGUAGE: en_US
+    env_file: .env
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - storage:/var/lib/outline/data
+    networks:
+      - internal
+      - default
+
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=outline
+      - POSTGRES_USER=outline
+      # POSTGRES_PASSWORD set in env file
+    env_file: .env
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD", "pg_isready -U outline"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  redis:
+    image: redis:7.2
+    restart: unless-stopped
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 30s
+      retries: 3
+
+
+volumes:
+  storage:
+  db:
+
+networks:
+  internal:
+  default:
+    name: default-network
+    external: true
