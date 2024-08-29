@@ -2,6 +2,8 @@ ARG VERSION=20.0
 
 FROM gradle:8.2-jdk17 AS plugin-builder
 
+ARG VERSION
+WORKDIR /build
 RUN git clone https://github.com/giz-berlin/keycloak-role-authenticator \
     && cd keycloak-role-authenticator \
     && sed -i -E "s/keycloakVersion = '[0-9\.]+'/keycloakVersion = '$VERSION'/" build.gradle \
@@ -14,7 +16,7 @@ ENV KC_METRICS_ENABLED=true
 ENV KC_FEATURES=token-exchange
 ENV KC_DB=postgres
 
-COPY --from=plugin-builder keycloak-role-authenticator/build/libs/*.jar /opt/keycloak/providers
+COPY --from=plugin-builder /build/keycloak-role-authenticator/build/libs/*.jar /opt/keycloak/providers
 
 RUN /opt/keycloak/bin/kc.sh build
 
