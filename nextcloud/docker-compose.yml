@@ -1,7 +1,7 @@
 services:
 
   nextcloud:
-    image: nextcloud:29.0.5-apache # Also change tag of the nextcloud-cron container!
+    image: nextcloud:29.0.6-apache # Also change tag of the nextcloud-cron container!
     hostname: nextcloud.myhpi.local
     restart: unless-stopped
     volumes:
@@ -46,7 +46,7 @@ services:
       - default
 
   nextcloud-cron:
-    image: nextcloud:29.0.5-apache # Also change tag of the main nextcloud container!
+    image: nextcloud:29.0.6-apache # Also change tag of the main nextcloud container!
     restart: unless-stopped
     volumes:
       - nextcloud_vol:/var/www/html
