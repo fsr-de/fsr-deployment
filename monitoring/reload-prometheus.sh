@@ -1,3 +1,3 @@
-#!/bin/bash
+#!/bin/sh
 
-/bin/kill -HUP `pidof prometheus`
+sudo docker compose exec -it prometheus sh -c '/bin/kill -HUP `pidof prometheus`'
