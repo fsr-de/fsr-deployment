@@ -1,0 +1,76 @@
+services:
+
+  grafana:
+    image: grafana/grafana-oss:11.2.0
+    hostname: grafana.myhpi.local
+    restart: unless-stopped
+    volumes:
+      - grafana:/var/lib/grafana
+      - ./grafana.ini:/etc/grafana/grafana.ini:ro
+    depends_on:
+      - renderer
+      - db
+      - prometheus
+    env_file:
+      - .env
+    networks:
+      - default
+      - internal
+
+  renderer:
+    image: grafana/grafana-image-renderer:3.11.4
+    restart: unless-stopped
+    environment:
+      AUTH_TOKEN: ${RENDERER_TOKEN}
+    networks:
+      - internal
+
+  prometheus:
+    image: prom/prometheus:2.54.1
+    restart: unless-stopped
+    command:
+      # Keep default flags from Dockerfile
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.console.libraries=/usr/share/prometheus/console_libraries
+      - --web.console.templates=/usr/share/prometheus/consoles
+      # Additional custom flags
+      - --storage.tsdb.retention.time=45d
+    volumes:
+      - prometheus:/prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./scrape-configs:/etc/prometheus/scrape-configs:ro
+    networks:
+      - monitoring
+      - internal
+
+  db:
+    image: mariadb:11.5
+    restart: unless-stopped
+    command: --transaction-isolation=READ-COMMITTED
+    volumes:
+      - db:/var/lib/mysql
+    environment:
+      - MYSQL_USER=grafana
+      - MYSQL_DATABASE=grafana
+      # MYSQL_ROOT_PASSWORD set in env file
+      # MYSQL_PASSWORD set in env file
+      - MARIADB_AUTO_UPGRADE=true
+    env_file:
+      - .env
+    networks:
+      - internal
+
+volumes:
+  grafana:
+  prometheus:
+  db:
+
+networks:
+  internal:
+  default:
+    name: default-network
+    external: true
+  monitoring:
+    name: monitoring
+    external: true
