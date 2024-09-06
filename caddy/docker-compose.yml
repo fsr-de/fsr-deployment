@@ -15,10 +15,14 @@ services:
       - ./log:/log
     networks:
       - default
+      - monitoring
 
 networks:
   default:
     name: default-network
+    external: true
+  monitoring:
+    name: monitoring
     external: true
 
 volumes:
