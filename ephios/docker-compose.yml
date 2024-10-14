@@ -1,7 +1,7 @@
 services:
 
   ephios:
-    image: ghcr.io/ephios-dev/ephios:v0.16.5
+    image: ghcr.io/ephios-dev/ephios:v0.17.1
     restart: unless-stopped
     hostname: django.ephios.myhpi.local
     environment:
@@ -34,7 +34,7 @@ services:
       - internal
 
   db:
-    image: postgres:12
+    image: postgres:16
     hostname: db.ephios.myhpi.local
     restart: unless-stopped
     env_file:
