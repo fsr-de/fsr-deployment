@@ -1,7 +1,7 @@
 services:
 
   grafana:
-    image: grafana/grafana-oss:11.2.0
+    image: grafana/grafana-oss:11.5.1
     hostname: grafana.myhpi.local
     restart: unless-stopped
     volumes:
@@ -18,7 +18,7 @@ services:
       - internal
 
   renderer:
-    image: grafana/grafana-image-renderer:3.11.4
+    image: grafana/grafana-image-renderer:3.12.0
     restart: unless-stopped
     environment:
       AUTH_TOKEN: ${RENDERER_TOKEN}
@@ -26,7 +26,7 @@ services:
       - internal
 
   prometheus:
-    image: prom/prometheus:v2.54.1
+    image: prom/prometheus:v3.1.0
     restart: unless-stopped
     command:
       # Keep default flags from Dockerfile
@@ -45,7 +45,7 @@ services:
       - internal
 
   db:
-    image: mariadb:11.5
+    image: mariadb:11.6
     restart: unless-stopped
     command: --transaction-isolation=READ-COMMITTED
     volumes:
