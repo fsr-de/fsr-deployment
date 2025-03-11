@@ -46,7 +46,7 @@ services:
       - db-gateway-access
 
   nginx:
-    image: nginx:1.19
+    image: nginx:1.26
     hostname: ephios.myhpi.local
     restart: unless-stopped
     networks: 
