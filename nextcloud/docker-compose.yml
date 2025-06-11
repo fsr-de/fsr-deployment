@@ -1,7 +1,7 @@
 services:
 
   nextcloud:
-    image: nextcloud:31.0.4-apache # Also change tag of the nextcloud-cron container!
+    image: nextcloud:31.0.5-apache # Also change tag of the nextcloud-cron container!
     hostname: nextcloud.myhpi.local
     restart: unless-stopped
     volumes:
@@ -46,7 +46,7 @@ services:
       - default
 
   nextcloud-cron:
-    image: nextcloud:31.0.4-apache # Also change tag of the main nextcloud container!
+    image: nextcloud:31.0.5-apache # Also change tag of the main nextcloud container!
     restart: unless-stopped
     volumes:
       - nextcloud_vol:/var/www/html
@@ -63,7 +63,7 @@ services:
       - nextcloud
 
   db:
-    image: mariadb:11.7
+    image: mariadb:11.8
     restart: unless-stopped
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     volumes:
@@ -80,13 +80,13 @@ services:
       - db_net
 
   redis:
-    image: redis:7.4
+    image: redis:8.0
     restart: unless-stopped
     networks:
       - redis_net
 
   onlyoffice:
-    image: onlyoffice/documentserver:8.3.0
+    image: onlyoffice/documentserver:8.3.3
     hostname: office.nextcloud.myhpi.local
     restart: unless-stopped
     volumes:
