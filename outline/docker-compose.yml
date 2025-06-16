@@ -1,7 +1,7 @@
 services:
 
   outline:
-    image: outlinewiki/outline:0.81.1
+    image: outlinewiki/outline:0.84.0
     hostname: outline.myhpi.local
     restart: unless-stopped
     environment:
@@ -49,7 +49,7 @@ services:
       - default
 
   db:
-    image: postgres:16
+    image: postgres:17.5
     restart: unless-stopped
     volumes:
       - db:/var/lib/postgresql/data
@@ -67,7 +67,7 @@ services:
       retries: 3
 
   redis:
-    image: redis:7.2
+    image: redis:8.0
     restart: unless-stopped
     networks:
       - internal
