@@ -4,7 +4,7 @@ services:
     build:
       context: .
       args:
-        VERSION: "26.1.4"
+        VERSION: "26.2.0"
     hostname: auth.myhpi.local
     restart: unless-stopped
     environment:
@@ -22,9 +22,11 @@ services:
     networks:
       - db_net
       - default
+      - monitoring
+
 
   db:
-    image: postgres:15-alpine
+    image: postgres:17.5-alpine
     restart: unless-stopped
     environment:
       - POSTGRES_USER=keycloak
@@ -44,6 +46,10 @@ networks:
   default:
     name: default-network
     external: true
+  monitoring:
+    name: monitoring
+    external: true
+
 
 volumes:
   db_vol:
