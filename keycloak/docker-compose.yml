@@ -22,6 +22,8 @@ services:
     networks:
       - db_net
       - default
+      - monitoring
+
 
   db:
     image: postgres:17.5-alpine
@@ -44,6 +46,10 @@ networks:
   default:
     name: default-network
     external: true
+  monitoring:
+    name: monitoring
+    external: true
+
 
 volumes:
   db_vol:
