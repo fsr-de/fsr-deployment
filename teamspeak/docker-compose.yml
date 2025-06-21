@@ -1,0 +1,49 @@
+services:
+  teamspeak:
+    image: teamspeak:3.13.7
+    restart: unless-stopped
+    ports:
+      - 9987:9987/udp
+      - 10011:10011
+      - 30033:30033
+    hostname: ts3.myhpi.local
+    environment:
+      TS3SERVER_DB_PLUGIN: ts3db_mariadb
+      TS3SERVER_DB_SQLCREATEPATH: create_mariadb
+      TS3SERVER_DB_HOST: db
+      TS3SERVER_DB_USER: teamspeak
+      TS3SERVER_DB_PASSWORD: ${MYSQL_PASSWORD}
+      TS3SERVER_DB_NAME: teamspeak
+      TS3SERVER_DB_WAITUNTILREADY: 30
+      TS3SERVER_LICENSE: accept
+    volumes:
+      - ts3-data:/var/ts3server
+    networks:
+      - internal
+      - default
+
+  db:
+    image: mariadb:11.8
+    restart: unless-stopped
+    environment:
+      - MYSQL_USER=teamspeak
+      - MYSQL_DATABASE=teamspeak
+      # MYSQL_ROOT_PASSWORD set in env file
+      # MYSQL_PASSWORD set in env file
+      - MARIADB_AUTO_UPGRADE=true
+    env_file:
+      - .env
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - internal
+
+volumes:
+  ts3-data:
+  db-data:
+
+networks:
+  internal:
+  default:
+    name: default-network
+    external: true
