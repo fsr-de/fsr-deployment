@@ -8,14 +8,16 @@ services:
       - 30033:30033
     hostname: ts3.myhpi.local
     environment:
-      TS3SERVER_DB_PLUGIN: ts3db_mariadb
-      TS3SERVER_DB_SQLCREATEPATH: create_mariadb
-      TS3SERVER_DB_HOST: db
-      TS3SERVER_DB_USER: teamspeak
-      TS3SERVER_DB_PASSWORD: ${MYSQL_PASSWORD}
-      TS3SERVER_DB_NAME: teamspeak
-      TS3SERVER_DB_WAITUNTILREADY: 30
-      TS3SERVER_LICENSE: accept
+      - TS3SERVER_DB_PLUGIN=ts3db_mariadb
+      - TS3SERVER_DB_SQLCREATEPATH=create_mariadb
+      - TS3SERVER_DB_HOST=db
+      - TS3SERVER_DB_USER=teamspeak
+      # TS3SERVER_DB_PASSWORD set in env file
+      - TS3SERVER_DB_NAME=teamspeak
+      - TS3SERVER_DB_WAITUNTILREADY=30
+      - TS3SERVER_LICENSE=accept
+    env_file:
+      - .env
     volumes:
       - ts3-data:/var/ts3server
     networks:
