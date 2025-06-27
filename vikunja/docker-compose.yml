@@ -38,23 +38,23 @@ services:
       - internal
       - monitoring
 
-db:
-  image: mariadb:11.8
-  command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-  environment:
-    # MYSQL_ROOT_PASSWORD set in env
-    - MYSQL_USER=vikunja
-    # MYSQL_PASSWORD set in env
-    - MYSQL_DATABASE=vikunja
-  volumes:
-    - db:/var/lib/mysql
-  restart: unless-stopped
-  healthcheck:
-    test: ["CMD-SHELL", "mysqladmin ping -h localhost -u $$MYSQL_USER --password=$$MYSQL_PASSWORD"]
-    interval: 2s
-    start_period: 30s
-  networks:
-    - internal
+  db:
+    image: mariadb:11.8
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      # MYSQL_ROOT_PASSWORD set in env
+      - MYSQL_USER=vikunja
+      # MYSQL_PASSWORD set in env
+      - MYSQL_DATABASE=vikunja
+    volumes:
+      - db:/var/lib/mysql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u $$MYSQL_USER --password=$$MYSQL_PASSWORD"]
+      interval: 2s
+      start_period: 30s
+    networks:
+      - internal
 
 volumes:
   app_files:
