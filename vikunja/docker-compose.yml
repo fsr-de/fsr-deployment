@@ -1,0 +1,70 @@
+services:
+  vikunja:
+    image: vikunja/vikunja:v0.24.6
+    hostname: vikunja.myhpi.local
+    environment:
+      - VIKUNJA_SERVICE_PUBLICURL=https://vikunja.myhpi.local
+      - VIKUNJA_DATABASE_HOST=db
+      # VIKUNJA_DATABASE_PASSWORD set in env
+      - VIKUNJA_DATABASE_TYPE=mysql
+      - VIKUNJA_DATABASE_USER=vikunja
+      - VIKUNJA_DATABASE_DATABASE=vikunja
+      # VIKUNJA_SERVICE_JWTSECRET set in env
+      - VIKUNJA_SERVICE_TIMEZONE='Europe/Berlin'
+      - VIKUNJA_MAILER_ENABLED=true
+      # VIKUNJA_MAILER_HOST set in env
+      - VIKUNJA_MAILER_PORT=25
+      # VIKUNJA_MAILER_USERNAME set in env
+      # VIKUNJA_MAILER_PASSWORD set in env
+      # VIKUNJA_MAILER_FROMEMAIL 
+      - VIKUNJA_MIGRATION_TRELLO_ENABLE=true
+      # VIKUNJA_MIGRATION_TRELLO_KEY set in env
+      # TODO Add auth settings
+      - VIKUNJA_METRICS_ENABLED=true 
+      - VIKUNJA_DEFAULTSETTINGS_AVATAR_PROVIDER=gravatar
+      - VIKUNJA_DEFAULTSETTINGS_WEEK_START=1
+    env_file:
+      - .env
+    ports:
+      - 3456:3456
+    volumes:
+      - app_files:/app/vikunja/files
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+  networks:
+    - default
+    - internal
+    - monitoring
+
+db:
+  image: mariadb:11.8
+  command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+  environment:
+    # MYSQL_ROOT_PASSWORD set in env
+    - MYSQL_USER=vikunja
+    # MYSQL_PASSWORD set in env
+    - MYSQL_DATABASE=vikunja
+  volumes:
+    - db:/var/lib/mysql
+  restart: unless-stopped
+  healthcheck:
+    test: ["CMD-SHELL", "mysqladmin ping -h localhost -u $$MYSQL_USER --password=$$MYSQL_PASSWORD"]
+    interval: 2s
+    start_period: 30s
+  networks:
+    - internal
+
+volumes:
+  app_files:
+  db:
+
+networks:
+  default:
+    name: default-network
+    external: true
+  internal: {}
+  monitoring:
+    name: monitoring
+    external: true
