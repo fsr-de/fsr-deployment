@@ -33,10 +33,10 @@ services:
       db:
         condition: service_healthy
     restart: unless-stopped
-  networks:
-    - default
-    - internal
-    - monitoring
+    networks:
+      - default
+      - internal
+      - monitoring
 
 db:
   image: mariadb:11.8
