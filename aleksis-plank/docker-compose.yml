@@ -1,0 +1,105 @@
+services:
+  db:
+    image: registry.edugit.org/aleksis/libs/postgres-aleksis:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=aleksis
+      # POSTGRES_PASSWORD set in env
+      - POSTGRES_DB=aleksis
+    env_file:
+      - .env
+    networks:
+      - internal
+
+  valkey:
+    image: valkey/valkey:8-bookworm
+    networks:
+      - internal
+
+  app:
+    build: .
+    hostname: inventory.myhpi.local
+    volumes:
+      - aleksis_media:/var/lib/aleksis/media/
+      - aleksis_backups:/var/lib/aleksis/backups/
+    environment:
+      - ALEKSIS_http__allowed_hosts=['inventory.myhpi.de']
+      - ALEKSIS_valkey__host=valkey
+      - ALEKSIS_database__disable_pool=True
+      - ALEKSIS_database__host=db
+      # ALEKSIS_database__password set in env
+      - ALEKSIS_maintenance__debug=${ALEKSIS_maintenance__debug:-false}
+      - PREPARE=1
+      - RUN_MODE=uwsgi
+    env_file:
+      - .env
+    ports:
+      - 8794:8000
+    depends_on:
+      - db
+      - valkey
+    networks:
+      - internal
+      - default
+
+  worker:
+    build: .
+    volumes:
+      - aleksis_media:/var/lib/aleksis/media/
+      - aleksis_backups:/var/lib/aleksis/backups/
+    tmpfs:
+      - /var/www/.cache/
+    environment:
+      - ALEKSIS_http__allowed_hosts=['inventory.myhpi.de']
+      - ALEKSIS_valkey__host=valkey
+      - ALEKSIS_database__disable_pool=True
+      - ALEKSIS_database__host=db
+      # ALEKSIS_database__password set in env
+      - ALEKSIS_maintenance__debug=${ALEKSIS_maintenance__debug:-false}
+      - ALEKSIS_selenium__url="http://firefox:4444"
+      - PREPARE=0
+      - RUN_MODE=celery-worker
+    env_file:
+      - .env
+    depends_on:
+      - app
+    networks:
+      - internal
+
+  scheduler:
+    build: .
+    environment:
+      - ALEKSIS_http__allowed_hosts=['inventory.myhpi.de']
+      - ALEKSIS_valkey__host=valkey
+      - ALEKSIS_database__disable_pool=True
+      - ALEKSIS_database__host=db
+      # ALEKSIS_database__password set in env
+      - ALEKSIS_maintenance__debug=${ALEKSIS_maintenance__debug:-false}
+      - PREPARE=0
+      - RUN_MODE=celery-beat
+    env_file:
+      - .env
+    depends_on:
+      - app
+    networks:
+      - internal
+
+  firefox:
+    image: docker.io/selenium/standalone-firefox:4.32
+    shm_size: 2gb
+    environment:
+      - ALEKSIS_http__allowed_hosts=['inventory.myhpi.de']
+    networks:
+      - internal
+
+volumes:
+  postgres_data:
+  aleksis_media:
+  aleksis_backups:
+
+networks:
+  internal:
+  default:
+    name: default-network
+    external: true
