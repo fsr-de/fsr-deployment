@@ -32,6 +32,15 @@ services:
       - ALEKSIS_maintenance__debug=${ALEKSIS_maintenance__debug:-false}
       - PREPARE=1
       - RUN_MODE=uwsgi
+      - ALEKSIS_auth__providers__openid_connect__verified_email=true
+      - ALEKSIS_auth__providers__openid_connect__email_authentication=true
+      # ALEKSIS_auth__providers__openid_connect__apps__0__client_id set in env
+      # ALEKSIS_auth__providers__openid_connect__apps__0__secret set in env
+      - ALEKSIS_auth__providers__openid_connect__apps__0__name=Example
+      # ALEKSIS_auth__providers__openid_connect__apps__0__provider_id set in env
+      # ALEKSIS_auth__providers__openid_connect__apps__0__settings__server_url set in env
+      - ALEKSIS_auth__providers__openid_connect__apps__0__verified_email=true
+      - ALEKSIS_auth__providers__openid_connect__apps__0__email_authentication=true
     env_file:
       - .env
     ports:
@@ -60,6 +69,15 @@ services:
       - ALEKSIS_selenium__url="http://firefox:4444"
       - PREPARE=0
       - RUN_MODE=celery-worker
+      - ALEKSIS_auth__providers__openid_connect__verified_email=true
+      - ALEKSIS_auth__providers__openid_connect__email_authentication=true
+      # ALEKSIS_auth__providers__openid_connect__apps__0__client_id set in env
+      # ALEKSIS_auth__providers__openid_connect__apps__0__secret set in env
+      - ALEKSIS_auth__providers__openid_connect__apps__0__name=Example
+      # ALEKSIS_auth__providers__openid_connect__apps__0__provider_id set in env
+      # ALEKSIS_auth__providers__openid_connect__apps__0__settings__server_url set in env
+      - ALEKSIS_auth__providers__openid_connect__apps__0__verified_email=true
+      - ALEKSIS_auth__providers__openid_connect__apps__0__email_authentication=true
     env_file:
       - .env
     depends_on:
