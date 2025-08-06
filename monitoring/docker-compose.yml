@@ -18,7 +18,7 @@ services:
       - internal
 
   renderer:
-    image: grafana/grafana-image-renderer:4.0.10
+    image: grafana/grafana-image-renderer:v4.0.10
     restart: unless-stopped
     environment:
       AUTH_TOKEN: ${RENDERER_TOKEN}
