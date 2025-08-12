@@ -1,0 +1,12 @@
+[auth.providers.openid_connect]
+VERIFIED_EMAIL = true
+EMAIL_AUTHENTICATION = true
+
+[[auth.providers.openid_connect.APPS]]
+client_id = ''
+secret = ''
+name = 'Example'
+provider_id = 'example'
+settings = { server_url =  'https://example.eu' }
+verified_email = true
+email_authentication = true
