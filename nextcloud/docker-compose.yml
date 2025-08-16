@@ -86,7 +86,7 @@ services:
       - redis_net
 
   onlyoffice:
-    image: onlyoffice/documentserver:9.10.0
+    image: onlyoffice/documentserver:9.0.4
     hostname: office.nextcloud.myhpi.local
     restart: unless-stopped
     volumes:
