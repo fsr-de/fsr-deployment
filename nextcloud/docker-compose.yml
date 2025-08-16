@@ -1,7 +1,7 @@
 services:
 
   nextcloud:
-    image: nextcloud:31.0.7-apache # Also change tag of the nextcloud-cron container!
+    image: nextcloud:31.0.8-apache # Also change tag of the nextcloud-cron container!
     hostname: nextcloud.myhpi.local
     restart: unless-stopped
     volumes:
@@ -46,7 +46,7 @@ services:
       - default
 
   nextcloud-cron:
-    image: nextcloud:31.0.7-apache # Also change tag of the main nextcloud container!
+    image: nextcloud:31.0.8-apache # Also change tag of the main nextcloud container!
     restart: unless-stopped
     volumes:
       - nextcloud_vol:/var/www/html
@@ -86,7 +86,7 @@ services:
       - redis_net
 
   onlyoffice:
-    image: onlyoffice/documentserver:8.3.3
+    image: onlyoffice/documentserver:9.10.0
     hostname: office.nextcloud.myhpi.local
     restart: unless-stopped
     volumes:
