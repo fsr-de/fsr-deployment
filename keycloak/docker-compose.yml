@@ -1,10 +1,9 @@
 services:
-
   keycloak:
     build:
       context: .
       args:
-        VERSION: "26.3.2"
+        VERSION: "26.3.5"
     hostname: auth.myhpi.local
     restart: unless-stopped
     environment:
