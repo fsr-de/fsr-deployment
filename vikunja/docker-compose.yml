@@ -1,6 +1,6 @@
 services:
   vikunja:
-    image: vikunja/vikunja:0.24.6
+    image: vikunja/vikunja:v1.0.0-rc1
     hostname: vikunja.myhpi.local
     environment:
       - VIKUNJA_SERVICE_PUBLICURL=https://vikunja.myhpi.de
