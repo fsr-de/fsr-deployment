@@ -3,26 +3,33 @@ services:
     image: vikunja/vikunja:1.0.0-rc1
     hostname: vikunja.myhpi.local
     environment:
-      - VIKUNJA_SERVICE_PUBLICURL=https://vikunja.myhpi.de
-      - VIKUNJA_DATABASE_HOST=db
+      VIKUNJA_SERVICE_PUBLICURL: https://trello.myhpi.de
+      VIKUNJA_DATABASE_HOST: db
       # VIKUNJA_DATABASE_PASSWORD set in env
-      - VIKUNJA_DATABASE_TYPE=postgres
-      - VIKUNJA_DATABASE_USER=vikunja
-      - VIKUNJA_DATABASE_DATABASE=vikunja
+      VIKUNJA_DATABASE_TYPE: postgres
+      VIKUNJA_DATABASE_USER: vikunja
+      VIKUNJA_DATABASE_DATABASE: vikunja
       # VIKUNJA_SERVICE_JWTSECRET set in env
-      - VIKUNJA_SERVICE_TIMEZONE=Europe/Berlin
-      - VIKUNJA_MAILER_ENABLED=true
+      VIKUNJA_SERVICE_TIMEZONE: Europe/Berlin
+      VIKUNJA_MAILER_ENABLED: true
       # VIKUNJA_MAILER_HOST set in env
-      - VIKUNJA_MAILER_PORT=25
+      VIKUNJA_MAILER_PORT: 25
       # VIKUNJA_MAILER_USERNAME set in env
       # VIKUNJA_MAILER_PASSWORD set in env
       # VIKUNJA_MAILER_FROMEMAIL
-      - VIKUNJA_MIGRATION_TRELLO_ENABLE=true
+      VIKUNJA_MIGRATION_TRELLO_ENABLE: true
       # VIKUNJA_MIGRATION_TRELLO_KEY set in env
-      # TODO Add auth settings
-      - VIKUNJA_METRICS_ENABLED=true
-      - VIKUNJA_DEFAULTSETTINGS_AVATAR_PROVIDER=gravatar
-      - VIKUNJA_DEFAULTSETTINGS_WEEK_START=1
+      VIKUNJA_AUTH_OPENID_ENABLED: true
+      VIKUNJA_AUTH_OPENID_PROVIDERS_keycloak_NAME: FSR Keycloak
+      VIKUNJA_AUTH_OPENID_PROVIDERS_keycloak_AUTHURL: https://auth.myhpi.de/realms/fsr
+      VIKUNJA_AUTH_OPENID_PROVIDERS_keycloak_LOGOUTURL: https://auth.myhpi.de/realms/fsr/protocol/openid-connect/logout
+      # VIKUNJA_AUTH_OPENID_PROVIDERS_keycloak_CLIENTID set in env
+      # VIKUNJA_AUTH_OPENID_PROVIDERS_keycloak_CLIENTSECRET set in env
+      VIKUNJA_AUTH_OPENID_PROVIDERS_keycloak_SCOPE: openid email profile
+
+      VIKUNJA_METRICS_ENABLED: true
+      VIKUNJA_DEFAULTSETTINGS_AVATAR_PROVIDER: gravatar
+      VIKUNJA_DEFAULTSETTINGS_WEEK_START: 1
     env_file:
       - .env
     ports:
