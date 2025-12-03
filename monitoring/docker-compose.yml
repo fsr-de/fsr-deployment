@@ -1,7 +1,7 @@
 services:
 
   grafana:
-    image: grafana/grafana-oss:12.1.1
+    image: grafana/grafana:12.3.0
     hostname: grafana.myhpi.local
     restart: unless-stopped
     volumes:
@@ -18,7 +18,7 @@ services:
       - internal
 
   renderer:
-    image: grafana/grafana-image-renderer:v5.0.7
+    image: grafana/grafana-image-renderer:v5.0.10
     restart: unless-stopped
     environment:
       AUTH_TOKEN: ${RENDERER_TOKEN}
@@ -26,7 +26,7 @@ services:
       - internal
 
   prometheus:
-    image: prom/prometheus:v3.7.3
+    image: prom/prometheus:v3.8.0
     restart: unless-stopped
     command:
       # Keep default flags from Dockerfile
