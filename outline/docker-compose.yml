@@ -1,7 +1,7 @@
 services:
 
   outline:
-    image: outlinewiki/outline:1.1.0
+    image: outlinewiki/outline:1.3.0
     hostname: outline.myhpi.local
     restart: unless-stopped
     environment:
