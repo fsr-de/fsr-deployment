@@ -1,7 +1,7 @@
 services:
 
   grafana:
-    image: grafana/grafana:12.3.1
+    image: grafana/grafana:12.3.3
     hostname: grafana.myhpi.local
     restart: unless-stopped
     volumes:
@@ -18,7 +18,7 @@ services:
       - internal
 
   renderer:
-    image: grafana/grafana-image-renderer:v5.4.0
+    image: grafana/grafana-image-renderer:v5.5.1
     restart: unless-stopped
     environment:
       AUTH_TOKEN: ${RENDERER_TOKEN}
