@@ -10,3 +10,8 @@ provider_id = 'example'
 settings = { server_url =  'https://example.eu' }
 verified_email = true
 email_authentication = true
+
+[auth.social]
+groups_claim = "roles"
+groups_name_field = "name"
+auto_signup = true
