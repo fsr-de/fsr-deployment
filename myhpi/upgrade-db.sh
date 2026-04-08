@@ -4,6 +4,8 @@ cd $SCRIPT_DIR
 mkdir -p upgrade
 docker compose exec myhpi_postgres pg_dumpall -U myhpi > ./upgrade/sqldump.sql
 
+sleep 5
+
 docker compose down
 docker volume rm myhpi_myhpi_postgres_data
 
