@@ -18,11 +18,11 @@ services:
       - intern
 
   myhpi_postgres:
-    image: postgres:17-alpine
+    image: postgres:18.3-alpine
     hostname: db.myhpi.local
     restart: unless-stopped
     volumes:
-      - myhpi_postgres_data:/var/lib/postgresql/data/
+      - myhpi_postgres_data:/var/lib/postgresql/
     env_file:
       - .env
     environment:
