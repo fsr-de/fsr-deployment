@@ -1,6 +1,6 @@
 services:
   vikunja:
-    image: vikunja/vikunja:1.0.0-rc1
+    image: vikunja/vikunja:2.2.2
     hostname: vikunja.myhpi.local
     environment:
       VIKUNJA_SERVICE_PUBLICURL: https://trello.myhpi.de
