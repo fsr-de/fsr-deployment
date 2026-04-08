@@ -1,7 +1,7 @@
 services:
 
   ephios:
-    image: ghcr.io/ephios-dev/ephios:v0.25.0
+    image: ghcr.io/ephios-dev/ephios:v0.26.1
     restart: unless-stopped
     hostname: django.ephios.myhpi.local
     environment:
@@ -27,26 +27,26 @@ services:
       - internal
 
   redis:
-    image: redis:8.0-alpine
+    image: redis:8.6-alpine
     restart: unless-stopped
     command: redis-server
     networks:
       - internal
 
   db:
-    image: postgres:17.5
+    image: postgres:18.1
     hostname: db.ephios.myhpi.local
     restart: unless-stopped
     env_file:
       - .env
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/
     networks:
       - internal
       - db-gateway-access
 
   nginx:
-    image: nginx:1.29.4
+    image: nginx:1.29.8
     hostname: ephios.myhpi.local
     restart: unless-stopped
     networks: 
