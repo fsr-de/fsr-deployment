@@ -18,7 +18,7 @@ services:
       - intern
 
   myhpi_postgres:
-    image: postgres:16-alpine
+    image: postgres:17-alpine
     hostname: db.myhpi.local
     restart: unless-stopped
     volumes:
