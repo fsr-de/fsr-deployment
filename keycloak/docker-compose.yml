@@ -3,7 +3,7 @@ services:
     build:
       context: .
       args:
-        VERSION: "26.5.4"
+        VERSION: "26.5.7"
     hostname: auth.myhpi.local
     restart: unless-stopped
     environment:
@@ -25,7 +25,7 @@ services:
 
 
   db:
-    image: postgres:17.5-alpine
+    image: postgres:18.3-alpine
     restart: unless-stopped
     environment:
       - POSTGRES_USER=keycloak
@@ -35,7 +35,7 @@ services:
     env_file:
       - .env
     volumes:
-      - db_vol:/var/lib/postgresql/data
+      - db_vol:/var/lib/postgresql
     shm_size: 256m
     networks:
       - db_net
