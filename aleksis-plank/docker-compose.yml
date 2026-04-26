@@ -2,7 +2,7 @@ services:
   db:
     image: registry.edugit.org/aleksis/libs/postgres-aleksis:latest
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres_data:/var/lib/postgresql/
     environment:
       - POSTGRES_USER=aleksis
       # POSTGRES_PASSWORD set in env
