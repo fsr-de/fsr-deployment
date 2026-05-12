@@ -1,7 +1,7 @@
 services:
 
   grafana:
-    image: grafana/grafana:13.0.1+security-01
+    image: grafana/grafana:13.0.1-security-01
     hostname: grafana.myhpi.local
     restart: unless-stopped
     volumes:
